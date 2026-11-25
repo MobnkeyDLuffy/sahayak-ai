@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahayak AI — Pitch Deck | Team Technologia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-obsidian: #09090B;
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.28);
+      --violet: #8B5CF6;
+      --violet-glow: rgba(139, 92, 246, 0.28);
+      --rose: #F43F5E;
+      --amber: #F59E0B;
+      --glass-bg: rgba(255, 255, 255, 0.035);
+      --glass-bg-hover: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-border-hover: rgba(255, 255, 255, 0.22);
+      --text-primary: #FAFAFA;
+      --text-secondary: #A1A1AA;
+      --text-muted: #71717A;
+      --radius-bento: 24px;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-obsidian);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+    }
+
+    h1, h2, h3, .font-display {
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    /* Ambient Mesh Background */
+    .ambient-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, #000 35%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 50%, #000 35%, transparent 100%);
+    }
+
+    .mesh-orb {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(110px);
+      opacity: 0.45;
+      transition: transform 1.2s var(--ease-out-expo), opacity 0.8s ease;
+    }
+
+    .orb-emerald {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, var(--emerald) 0%, transparent 70%);
+      top: -14%;
+      left: -8%;
+    }
+
+    .orb-violet {
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, var(--violet) 0%, transparent 70%);
+      bottom: -18%;
+      right: -8%;
+    }
+
+    .orb-center {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(139, 92, 246, 0.18) 50%, transparent 75%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.35;
+    }
+
+    /* Top Glowing Progress Bar */
+    .progress-track {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      z-index: 50;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 14.285%;
+      background: linear-gradient(90deg, var(--emerald), #34D399, var(--violet));
+      box-shadow: 0 0 18px var(--emerald), 0 0 32px var(--violet);
+      transition: width 0.55s var(--ease-out-expo);
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Persistent Header & Watermark Chrome */
+    .top-chrome {
+      position: fixed;
+      top: 22px;
+      left: 32px;
+      right: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 40;
+      pointer-events: none;
+    }
+
+    .brand-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      pointer-events: auto;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--emerald), var(--violet));
+      box-shadow: 0 0 12px var(--emerald);
+    }
+
+    .slide-counter {
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+
+    .top-hints {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .hint-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .hint-pill:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1px 6px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: 'Inter', monospace;
+    }
+
+    .watermark-badge {
+      position: fixed;
+      bottom: 24px;
+      left: 32px;
+      z-index: 40;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--text-muted);
+    }
+
+    /* Bottom Sleek Pill Navigation */
+    .nav-dock {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px;
+      border-radius: 999px;
+      background: rgba(18, 18, 22, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out-expo);
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .nav-btn.primary-next {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(139, 92, 246, 0.22));
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .nav-btn.primary-next:hover:not(:disabled) {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.35), rgba(139, 92, 246, 0.35));
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-dots {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 8px;
+    }
+
+    .nav-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s var(--ease-out-expo);
+      padding: 0;
+    }
+
+    .nav-dot:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .nav-dot.active {
+      width: 22px;
+      background: linear-gradient(90deg, var(--emerald), var(--violet));
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Deck & Slide Transitions */
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 76px 48px 92px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(24px) scale(0.985);
+      transition:
+        opacity 0.55s var(--ease-out-expo),
+        transform 0.65s var(--ease-out-expo),
+        visibility 0.55s;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide.prev-exit {
+      transform: translateY(-20px) scale(0.985);
+    }
+
+    .slide-inner {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Typography & Shared Utilities */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--emerald);
+    }
+
+    .eyebrow-violet {
+      color: #A78BFA;
+    }
+
+    .slide-header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .slide-title {
+      font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.08;
+      color: var(--text-primary);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #FFFFFF 0%, #34D399 48%, #A78BFA 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-emerald {
+      background: linear-gradient(135deg, #6EE7B7 0%, #10B981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-violet {
+      background: linear-gradient(135deg, #C4B5FD 0%, #8B5CF6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-alert {
+      background: linear-gradient(135deg, #FDA4AF 0%, #F43F5E 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Frosted Glassmorphism Bento Card */
+    .bento-card {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-bento);
+      padding: 28px;
+      overflow: hidden;
+      transition:
+        transform 0.4s var(--ease-out-expo),
+        border-color 0.35s ease,
+        background 0.35s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 45%, rgba(255,255,255,0.08));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .bento-card:hover {
+      transform: translateY(-4px);
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-hover);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Staggered Card Reveal on Active Slide */
+    .slide .stagger {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+    }
+
+    .slide.active .stagger {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide.active .stagger-1 { transition-delay: 0.06s; }
+    .slide.active .stagger-2 { transition-delay: 0.14s; }
+    .slide.active .stagger-3 { transition-delay: 0.22s; }
+    .slide.active .stagger-4 { transition-delay: 0.30s; }
+    .slide.active .stagger-5 { transition-delay: 0.38s; }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .icon-emerald {
+      background: rgba(16, 185, 129, 0.14);
+      color: #34D399;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.15);
+    }
+
+    .icon-violet {
+      background: rgba(139, 92, 246, 0.15);
+      color: #A78BFA;
+      box-shadow: 0 0 24px rgba(139, 92, 246, 0.16);
+    }
+
+    .icon-rose {
+      background: rgba(244, 63, 94, 0.14);
+      color: #FB7185;
+      box-shadow: 0 0 24px rgba(244, 63, 94, 0.14);
+    }
+
+    .icon-amber {
+      background: rgba(245, 158, 11, 0.14);
+      color: #FBBF24;
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.14);
+    }
+
+    /* ================= SLIDE 1: HERO ================= */
+    .hero-wrap {
+      text-align: center;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(12px);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #E4E4E7;
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.18);
+    }
+
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 9.5vw, 7.6rem);
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 2.3vw, 1.75rem);
+      font-weight: 500;
+      color: var(--text-secondary);
+      max-width: 760px;
+      line-height: 1.4;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #D4D4D8;
+    }
+
+    /* ================= SLIDE 2: PROBLEM (3 BENTO) ================= */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .problem-stat {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.1rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 0.98rem;
+      line-height: 1.55;
+      color: var(--text-secondary);
+    }
+
+    .card-tag {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: var(--text-secondary);
+    }
+
+    /* ================= SLIDE 3: SOLUTION (4 BENTO) ================= */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .solution-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 185px;
+    }
+
+    .solution-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .mini-lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6EE7B7;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .mini-lang-toggle:hover {
+      background: rgba(16, 185, 129, 0.24);
+      transform: scale(1.04);
+    }
+
+    /* ================= SLIDE 4: LIVE PRODUCT & ARCHITECTURE ================= */
+    .product-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .pipeline-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .pipe-step {
+      position: relative;
+      padding: 16px 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .pipe-step.active-step,
+    .pipe-step:hover {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .pipe-num {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--emerald);
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .pipe-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .pipe-sub {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+
+    .prototype-cta-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.16), rgba(16, 185, 129, 0.08) 55%, rgba(255,255,255,0.03));
+    }
+
+    .live-preview-screen {
+      background: rgba(9, 9, 11, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .preview-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .preview-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .preview-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .preview-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      font-size: 0.82rem;
+      color: #6EE7B7;
+      font-weight: 600;
+    }
+
+    .glow-cta-btn {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 24px;
+      margin-top: 18px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--emerald) 0%, #059669 45%, var(--violet) 100%);
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 32px rgba(16, 185, 129, 0.35), 0 0 48px rgba(139, 92, 246, 0.25);
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .glow-cta-btn:hover {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 0 42px rgba(16, 185, 129, 0.55), 0 0 60px rgba(139, 92, 246, 0.4);
+    }
+
+    /* ================= SLIDE 5: TARGET MARKET (SPLIT BENTO) ================= */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .market-card {
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6EE7B7;
+    }
+
+    .badge-violet {
+      background: rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: #C4B5FD;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.94rem;
+      color: #D4D4D8;
+    }
+
+    /* ================= SLIDE 6: BUSINESS MODEL (PRICING) ================= */
+    .pricing-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 310px;
+    }
+
+    .pricing-featured {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: linear-gradient(160deg, rgba(16, 185, 129, 0.08) 0%, rgba(255, 255, 255, 0.03) 65%);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 12px 0 8px;
+    }
+
+    .price-amount {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .price-unit {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* ================= SLIDE 7: CLOSING / WHY WE WIN ================= */
+    .closing-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .closing-statement {
+      font-size: clamp(2.6rem, 5vw, 4.3rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 18px;
+    }
+
+    .team-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .team-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .qr-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 14px;
+    }
+
+    .qr-box {
+      width: 176px;
+      height: 176px;
+      padding: 14px;
+      border-radius: 20px;
+      background: #FAFAFA;
+      box-shadow: 0 0 36px rgba(139, 92, 246, 0.28), 0 0 24px rgba(16, 185, 129, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 960px) {
+      .slide {
+        padding: 72px 24px 96px;
+        overflow-y: auto;
+        justify-content: flex-start;
+      }
+      .grid-3,
+      .grid-2x2,
+      .grid-2,
+      .product-layout,
+      .closing-grid {
+        grid-template-columns: 1fr;
+      }
+      .pipeline-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .watermark-badge {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Obsidian + Emerald / Violet Mesh Background -->
+  <div class="ambient-canvas">
+    <div class="grid-overlay"></div>
+    <div class="mesh-orb orb-emerald" id="orbEmerald"></div>
+    <div class="mesh-orb orb-violet" id="orbViolet"></div>
+    <div class="mesh-orb orb-center"></div>
+  </div>
+
+  <!-- Glowing Top Progress Bar -->
+  <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="7" aria-valuenow="1">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Top Chrome -->
+  <header class="top-chrome">
+    <div class="brand-mini">
+      <span class="brand-dot"></span>
+      <span>Sahayak AI</span>
+      <span class="slide-counter" id="slideCounter">01 / 07</span>
+    </div>
+    <div class="top-hints">
+      <button class="hint-pill" id="fullscreenBtn" title="Toggle Fullscreen (F)">
+        <span>Press <span class="kbd">F</span> for Fullscreen</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Subtle Watermark Badge -->
+  <div class="watermark-badge">
+    <span>Team Technologia • 2026</span>
+  </div>
+
+  <!-- Main 7-Slide Presentation Deck -->
+  <main class="deck" id="deck">
+
+    <!-- SLIDE 1: HERO -->
+    <section class="slide active" data-slide="1">
+      <div class="slide-inner hero-wrap">
+        <div class="hero-pill stagger stagger-1">
+          <span class="hero-pill-dot"></span>
+          <span>TEAM TECHNOLOGIA • STARTUP INNOVATION CHALLENGE 2026</span>
+        </div>
+
+        <h1 class="hero-title gradient-text stagger stagger-2">Sahayak AI</h1>
+
+        <p class="hero-subtitle stagger stagger-3">
+          Zero-Jargon Public Service Forms in 2 Minutes — Web App + Chrome Extension
+        </p>
+
+        <div class="hero-meta-row stagger stagger-4">
+          <div class="hero-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>100% Client-Side • Zero Hallucinations</span>
+          </div>
+          <div class="hero-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+            <span>English ↔ हिन्दी + (i) Explanations</span>
+          </div>
+          <div class="hero-chip">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>MV3 Extension + 1-Click Autofill</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: THE PROBLEM (3 BENTO CARDS) -->
+    <section class="slide" data-slide="2">
+      <div class="slide-inner">
+        <div class="slide-header stagger stagger-1">
+          <span class="eyebrow">01 / The Problem</span>
+          <h2 class="slide-title">Why Public Forms Fail <span class="gradient-alert">Millions</span></h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="bento-card stagger stagger-2">
+            <div class="icon-box icon-rose">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <div class="problem-stat gradient-alert">40%</div>
+            <h3 class="card-title">40% Rejection Rate</h3>
+            <p class="card-desc">Tiny errors ruin applications—wrong document format, mismatched dates, or one missed field wastes months.</p>
+            <span class="card-tag">Silent Rejections</span>
+          </article>
+
+          <article class="bento-card stagger stagger-3">
+            <div class="icon-box icon-amber">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="problem-stat gradient-violet">Legalize</div>
+            <h3 class="card-title">Legal Jargon Trap</h3>
+            <p class="card-desc">Forms written for lawyers, not students. Complex bureaucratic phrasing forces constant guesswork.</p>
+            <span class="card-tag">Zero Plain Language</span>
+          </article>
+
+          <article class="bento-card stagger stagger-4">
+            <div class="icon-box icon-violet">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></svg>
+            </div>
+            <div class="problem-stat gradient-emerald">₹200+</div>
+            <h3 class="card-title">₹200 Middleman Tax</h3>
+            <p class="card-desc">Citizens forced to pay agents just to understand forms, turning free public services into an unfair toll.</p>
+            <span class="card-tag">Avoidable Friction</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: THE SOLUTION (4 BENTO CARDS) -->
+    <section class="slide" data-slide="3">
+      <div class="slide-inner">
+        <div class="slide-header stagger stagger-1">
+          <span class="eyebrow">02 / The Solution</span>
+          <h2 class="slide-title">Built for <span class="gradient-text">Any Portal. Zero Jargon. 100% Private.</span></h2>
+        </div>
+
+        <div class="grid-2x2">
+          <article class="bento-card solution-card stagger stagger-2">
+            <div class="solution-top">
+              <div class="icon-box icon-emerald">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+              </div>
+              <button class="mini-lang-toggle" id="langDemoBtn" type="button">
+                <span id="langBadgeText">Try: EN → HI</span>
+              </button>
+            </div>
+            <div>
+              <h3 class="card-title" id="langCardTitle">English ↔ हिन्दी + (i) Simple Explanations</h3>
+              <p class="card-desc" id="langCardDesc">Every official term switches cleanly between English &amp; Hindi with one-tap plain-language explanations.</p>
+            </div>
+          </article>
+
+          <article class="bento-card solution-card stagger stagger-3">
+            <div class="icon-box icon-violet">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+            </div>
+            <div>
+              <h3 class="card-title">MV3 Chrome Extension + Smart Filter</h3>
+              <p class="card-desc">Scans any live portal (e-District, Samarth, Scholarships) while auto-skipping CAPTCHA, OTP, passwords &amp; CSRF tokens.</p>
+            </div>
+          </article>
+
+          <article class="bento-card solution-card stagger stagger-4">
+            <div class="icon-box icon-emerald">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div>
+              <h3 class="card-title">Live Auto-Updating Doc Checklist</h3>
+              <p class="card-desc">100% client-side rule engine dynamically verifies required proofs (Aadhaar, Domicile, Passbook, Income) as you type.</p>
+            </div>
+          </article>
+
+          <article class="bento-card solution-card stagger stagger-5">
+            <div class="icon-box icon-rose">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div>
+              <h3 class="card-title">Two-Way Sync &amp; 1-Click Autofill</h3>
+              <p class="card-desc">Import scanned forms via URL or JSON, verify with zero errors, and autofill the synced draft straight back onto the portal.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: LIVE PRODUCT & ARCHITECTURE -->
+    <section class="slide" data-slide="4">
+      <div class="slide-inner">
+        <div class="slide-header stagger stagger-1">
+          <span class="eyebrow eyebrow-violet">03 / Live Product &amp; Architecture</span>
+          <h2 class="slide-title">Two-Way Extension ↔ Web App. <span class="gradient-text">Live Today.</span></h2>
+        </div>
+
+        <div class="product-layout">
+          <!-- 4-Step Pipeline Bento -->
+          <article class="bento-card stagger stagger-2">
+            <div class="eyebrow" style="margin-bottom: 8px;">4-Step End-to-End Flow</div>
+            <h3 class="card-title">Scan Any Portal → Verify → 1-Click Autofill</h3>
+            <p class="card-desc" id="pipeDetailText">Click any stage below to see how Sahayak AI Web App + MV3 Extension work together.</p>
+
+            <div class="pipeline-row">
+              <div class="pipe-step active-step" data-detail="Step 1 — Scan: MV3 v1.3 Extension scans any live portal & Smart Filter skips CAPTCHA, OTP, passwords & CSRF tokens.">
+                <div class="pipe-num">01 • SCAN</div>
+                <div class="pipe-name">MV3 Scanner</div>
+                <div class="pipe-sub">Smart Filter ON</div>
+              </div>
+              <div class="pipe-step" data-detail="Step 2 — Import &amp; Guide: Opens in Sahayak AI (or JSON Import) with EN/HI toggle &amp; (i) Simple Explanations.">
+                <div class="pipe-num">02 • GUIDE</div>
+                <div class="pipe-name">Guided Flow</div>
+                <div class="pipe-sub">EN/HI + Checklist</div>
+              </div>
+              <div class="pipe-step" data-detail="Step 3 — Validate: 100% client-side rule engine flags missing fields &amp; builds a Ready Draft with zero server PII.">
+                <div class="pipe-num">03 • VERIFY</div>
+                <div class="pipe-name">Clean Draft</div>
+                <div class="pipe-sub">100% Client-Side</div>
+              </div>
+              <div class="pipe-step" data-detail="Step 4 — Autofill: Syncs the Ready Draft back to Chrome Extension to autofill the live govt/student portal in 1 click.">
+                <div class="pipe-num">04 • FILL</div>
+                <div class="pipe-name">1-Click Fill</div>
+                <div class="pipe-sub">Synced Portal Autofill</div>
+              </div>
+            </div>
+
+            <div class="live-preview-screen">
+              <div class="preview-bar">
+                <div class="preview-dots"><span></span><span></span><span></span></div>
+                <span>sahayak-mv3 v1.3 • smart_filter: ON</span>
+              </div>
+              <div class="preview-status" id="previewStatusBox">
+                <span>✓ Stage 01: Smart Filter skipped CAPTCHA/OTP/Passwords</span>
+                <span>100% Private</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Interactive Prototype Launch Bento -->
+          <article class="bento-card prototype-cta-card stagger stagger-3">
+            <div>
+              <div class="icon-box icon-violet">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <h3 class="card-title">Live Web App + MV3 Extension</h3>
+              <p class="card-desc">Open the live Vercel app to test Guided Forms, Live Checklists, JSON Import, and download the real MV3 Chrome Extension.</p>
+            </div>
+
+            <div>
+              <div class="card-tag" style="margin-bottom: 6px; color: #34D399; border-color: rgba(16,185,129,0.3);">
+                ● Deployed on Vercel • MV3 v1.3 Ready
+              </div>
+              <a href="https://sahayak-ai-one-delta.vercel.app/" target="_blank" rel="noopener noreferrer" class="glow-cta-btn">
+                <span>Launch Live Prototype ↗</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: TARGET MARKET (SPLIT BENTO) -->
+    <section class="slide" data-slide="5">
+      <div class="slide-inner">
+        <div class="slide-header stagger stagger-1">
+          <span class="eyebrow">04 / Target Market</span>
+          <h2 class="slide-title">Dual-Engine Adoption: <span class="gradient-text">B2B + B2C</span></h2>
+        </div>
+
+        <div class="grid-2">
+          <article class="bento-card market-card stagger stagger-2">
+            <div>
+              <span class="market-badge badge-emerald">B2B • High-Volume Operators</span>
+              <div class="icon-box icon-emerald" style="display:flex;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <h3 class="card-title">B2B: Cyber Cafes &amp; Jan Seva Kendras</h3>
+              <p class="card-desc">Scan any portal once, reuse saved schemas, and autofill 100s of citizen applications daily without re-typing.</p>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>3× faster turnaround with MV3 1-click portal autofill</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Works across e-District, Scholarship &amp; Samarth portals</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="bento-card market-card stagger stagger-3">
+            <div>
+              <span class="market-badge badge-violet">B2C • Direct Self-Serve</span>
+              <div class="icon-box icon-violet" style="display:flex;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h3 class="card-title">B2C: Students &amp; Citizens</h3>
+              <p class="card-desc">Scholarships, university portals &amp; certificates without stress—100% client-side privacy on your own browser.</p>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Zero middleman fees with plain Hindi/English guidance</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Aadhaar, OTPs &amp; passwords never leave your device</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: BUSINESS MODEL (PRICING CARDS) -->
+    <section class="slide" data-slide="6">
+      <div class="slide-inner">
+        <div class="slide-header stagger stagger-1">
+          <span class="eyebrow eyebrow-violet">05 / Business Model</span>
+          <h2 class="slide-title">Simple, High-Margin <span class="gradient-text">Unit Economics</span></h2>
+        </div>
+
+        <div class="grid-2">
+          <article class="bento-card pricing-card pricing-featured stagger stagger-2">
+            <div>
+              <span class="market-badge badge-emerald">Recurring SaaS • Best Value</span>
+              <h3 class="card-title">Cyber Cafe Pro</h3>
+              <div class="price-row">
+                <span class="price-amount gradient-emerald">₹299</span>
+                <span class="price-unit">/ mo — Cyber Cafe Pro</span>
+              </div>
+              <p class="card-desc">Unlimited portal scans, MV3 1-click autofill + faster customer turnaround for Jan Seva Kendras &amp; cyber cafes.</p>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Unlimited Extension portal scans &amp; autofill syncs</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>100+ forms/day capacity at &lt; ₹10/day cost</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="bento-card pricing-card stagger stagger-3">
+            <div>
+              <span class="market-badge badge-violet">Micro-Transaction • Zero Commitment</span>
+              <h3 class="card-title">Direct Citizen Pass</h3>
+              <div class="price-row">
+                <span class="price-amount gradient-violet">₹10</span>
+                <span class="price-unit">/ form — Direct Citizen Pass</span>
+              </div>
+              <p class="card-desc">Pay-as-you-go verified draft—95% cheaper than a ₹200 middleman fee with zero jargon.</p>
+            </div>
+            <ul class="bullet-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Pay-as-you-go verified draft &amp; live checklist</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Instant UPI checkout, zero subscription lock-in</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: CLOSING / WHY WE WIN -->
+    <section class="slide" data-slide="7">
+      <div class="slide-inner">
+        <div class="closing-grid">
+          <article class="bento-card stagger stagger-1" style="display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <span class="eyebrow" style="margin-bottom: 14px;">06 / Why We Win</span>
+              <h2 class="closing-statement gradient-text">Civic Tech That Actually Works.</h2>
+              <p class="card-desc" style="font-size: 1.08rem; max-width: 580px;">
+                100% client-side privacy, a working MV3 Chrome Extension with Smart Filter (skipping CAPTCHA, OTP &amp; passwords), instant Hindi-English guidance, and 1-click portal autofill.
+              </p>
+            </div>
+
+            <div>
+              <div class="team-badges">
+                <div class="team-badge">
+                  <span class="brand-dot"></span>
+                  <span>Team Technologia</span>
+                </div>
+                <div class="team-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2.2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                  <span>BSc IT</span>
+                </div>
+                <div class="team-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  <span>Startup Innovation Challenge 2026</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="bento-card qr-card stagger stagger-2">
+            <span class="market-badge badge-violet" style="margin-bottom: 0;">Scan for Live Demo</span>
+            <div class="qr-box" aria-label="QR code for live demo link">
+              <div id="qrcode" style="background: #FFFFFF; padding: 8px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; line-height: 0;"></div>
+            </div>
+            <div>
+              <div class="card-title" style="font-size: 1.05rem; margin-bottom: 4px;">Live Prototype QR</div>
+              <div class="card-desc" style="font-size: 0.82rem;">sahayak-ai-one-delta.vercel.app</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Sleek Pill Navigation Controls -->
+  <nav class="nav-dock" aria-label="Slide Navigation">
+    <button class="nav-btn" id="prevBtn" type="button" aria-label="Previous slide">
+      <span>←</span>
+      <span>Prev</span>
+    </button>
+
+    <div class="nav-dots" id="navDots"></div>
+
+    <button class="nav-btn primary-next" id="nextBtn" type="button" aria-label="Next slide">
+      <span>Next</span>
+      <span>→</span>
+    </button>
+  </nav>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const totalSlides = slides.length;
+      let currentIndex = 0;
+
+      const progressFill = document.getElementById('progressFill');
+      const slideCounter = document.getElementById('slideCounter');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const navDotsContainer = document.getElementById('navDots');
+      const fullscreenBtn = document.getElementById('fullscreenBtn');
+      const orbEmerald = document.getElementById('orbEmerald');
+      const orbViolet = document.getElementById('orbViolet');
+
+      // Build navigation dots
+      slides.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = 'nav-dot' + (idx === 0 ? ' active' : '');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+        dot.addEventListener('click', () => goToSlide(idx));
+        navDotsContainer.appendChild(dot);
+      });
+
+      const dots = Array.from(document.querySelectorAll('.nav-dot'));
+
+      function updateUI(prevIdx, nextIdx) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove('active', 'prev-exit');
+          if (i === nextIdx) {
+            slide.classList.add('active');
+          } else if (i === prevIdx && nextIdx > prevIdx) {
+            slide.classList.add('prev-exit');
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === nextIdx);
+        });
+
+        // Update top glowing progress bar
+        const pct = ((nextIdx + 1) / totalSlides) * 100;
+        progressFill.style.width = `${pct}%`;
+
+        // Update counter & buttons
+        slideCounter.textContent = `${String(nextIdx + 1).padStart(2, '0')} / ${String(totalSlides).padStart(2, '0')}`;
+        prevBtn.disabled = nextIdx === 0;
+        nextBtn.disabled = nextIdx === totalSlides - 1;
+
+        // Subtle parallax shift on mesh orbs per slide
+        const shift = nextIdx * 18;
+        orbEmerald.style.transform = `translate(${shift}px, ${shift * 0.5}px)`;
+        orbViolet.style.transform = `translate(${-shift}px, ${-shift * 0.4}px)`;
+      }
+
+      function goToSlide(index) {
+        if (index < 0 || index >= totalSlides || index === currentIndex) return;
+        const prevIdx = currentIndex;
+        currentIndex = index;
+        updateUI(prevIdx, currentIndex);
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        goToSlide(currentIndex - 1);
+      }
+
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+
+      // Fullscreen toggle ('F' key or button click)
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+      // Keyboard controls: Left/Right arrows + F for Fullscreen
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          prevSlide();
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          toggleFullscreen();
+        }
+      });
+
+      // Touch swipe support for tablets/phones
+      let touchStartX = 0;
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      document.addEventListener('touchend', (e) => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      // Slide 3: Interactive English <-> Hindi Preview Toggle
+      const langDemoBtn = document.getElementById('langDemoBtn');
+      const langBadgeText = document.getElementById('langBadgeText');
+      const langCardTitle = document.getElementById('langCardTitle');
+      const langCardDesc = document.getElementById('langCardDesc');
+      let isHindiDemo = false;
+
+      if (langDemoBtn) {
+        langDemoBtn.addEventListener('click', () => {
+          isHindiDemo = !isHindiDemo;
+          if (isHindiDemo) {
+            langBadgeText.textContent = 'Switch: HI → EN';
+            langCardTitle.textContent = 'हिन्दी ↔ English + (i) सरल व्याख्या';
+            langCardDesc.textContent = 'एक क्लिक में हर कठिन सरकारी शब्द सरल हिंदी या अंग्रेज़ी में बदलें — बिना किसी कन्फ्यूजन के।';
+          } else {
+            langBadgeText.textContent = 'Try: EN → HI';
+            langCardTitle.textContent = 'English ↔ हिन्दी + (i) Simple Explanations';
+            langCardDesc.textContent = 'Every official term switches cleanly between English & Hindi with one-tap plain-language explanations.';
+          }
+        });
+      }
+
+      // Slide 4: Interactive Pipeline Stage Selector
+      const pipeSteps = Array.from(document.querySelectorAll('.pipe-step'));
+      const pipeDetailText = document.getElementById('pipeDetailText');
+      const previewStatusBox = document.getElementById('previewStatusBox');
+
+      const stageStatusLabels = [
+        ['✓ Stage 01: Smart Filter skipped CAPTCHA/OTP/Passwords', '100% Private'],
+        ['✓ Stage 02: Imported into Guided Flow + Live Checklist', 'EN ↔ हिन्दी'],
+        ['✓ Stage 03: Rule-Verified Ready Draft built locally', '0 Server PII'],
+        ['✓ Stage 04: Synced Draft autofilled onto live portal', '1-Click Done']
+      ];
+
+      pipeSteps.forEach((step, idx) => {
+        step.addEventListener('click', () => {
+          pipeSteps.forEach((s) => s.classList.remove('active-step'));
+          step.classList.add('active-step');
+          pipeDetailText.textContent = step.getAttribute('data-detail');
+          previewStatusBox.innerHTML = `<span>${stageStatusLabels[idx][0]}</span><span>${stageStatusLabels[idx][1]}</span>`;
+        });
+      });
+
+      // Slide 7: Generate real scannable QR code pointing to your Vercel prototype
+      const qrContainer = document.getElementById('qrcode');
+      if (qrContainer && typeof QRCode !== 'undefined') {
+        new QRCode(qrContainer, {
+          text: 'https://sahayak-ai-one-delta.vercel.app/',
+          width: 132,
+          height: 132,
+          colorDark: '#000000',
+          colorLight: '#FFFFFF',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
+
+      // Initialize UI state
+      updateUI(0, 0);
+    })();
+  </script>
+</body>
+</html>
