@@ -4,7 +4,7 @@
 ## Live Project Links
 - **Live Web Application (Vercel):** https://sahayak-ai-one-delta.vercel.app/
 - **Interactive Pitch Deck:** https://mobnkeydluffy.github.io/sahayak-ai/pitch.html
-- **GitHub Repository:** https://github.com/MobnkeyDLuffy/sahayak-ai.git
+- **GitHub Repository:** https://github.com/MobnkeyDLuffy/sahayak-ai
 
 ---
 
