@@ -1,0 +1,6 @@
+{
+  "name": "Sahayak Form AI",
+  "description": "Accessible bilingual public-service form assistant with rule-verified guided flows, live document checklist, and Manifest V3 Chrome Extension scanner.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
